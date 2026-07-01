@@ -42,20 +42,6 @@
       <point x="488" y="-282"/>
       <point x="530" y="-333"/>
     </contour>
-    <contour>
-      <point x="702" y="-64" type="curve" name="dv04" smooth="yes"/>
-      <point x="651" y="-64"/>
-      <point x="610" y="-32"/>
-      <point x="610" y="11" type="curve" name="dh03" smooth="yes"/>
-      <point x="610" y="53"/>
-      <point x="653" y="87"/>
-      <point x="701" y="87" type="curve" name="dv05" smooth="yes"/>
-      <point x="750" y="87"/>
-      <point x="791" y="53"/>
-      <point x="791" y="10" type="curve" name="dh04" smooth="yes"/>
-      <point x="791" y="-31"/>
-      <point x="753" y="-64"/>
-    </contour>
   </outline>
   <lib>
     <dict>

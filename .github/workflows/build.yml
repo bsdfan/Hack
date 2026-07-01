@@ -1,0 +1,41 @@
+name: build
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        environment: default
+
+        permissions:
+            contents: read
+
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: auto
+            AWS_ENDPOINT_URL_S3: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+
+            - name: Install Nix
+              uses: DeterminateSystems/nix-installer-action@v22
+
+            - name: Build
+              run: |
+                  nix develop -c sh ./build-ttf.sh
+
+            - name: Create archive
+              working-directory: build/ttf
+              run: |
+                  tar -cJf ../hack-slashedzero.tar.xz *.ttf
+
+            - name: Upload to storage
+              run: |
+                  aws s3 cp \
+                    build/hack-slashedzero.tar.xz \
+                    "s3://${{ vars.R2_BUCKET }}/${{ vars.R2_PREFIX }}/hack-slashedzero.tar.xz"
